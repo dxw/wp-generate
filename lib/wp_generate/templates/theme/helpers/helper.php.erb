@@ -1,0 +1,20 @@
+<?php
+
+function render_partial($partial, $arguments = array()) {
+  if (!empty($arguments)) {
+    if(is_array($arguments)) {
+      extract($arguments);
+    } else {
+      extract(parse_str($arguments));
+    }
+  }
+
+  $helper_path = TEMPLATEPATH.'/helpers/'.$partial.'_helper.php';
+
+  if (file_exists($helper_path))
+    include_once $helper_path;
+
+  include TEMPLATEPATH."/partials/$partial.php";
+}
+
+?>

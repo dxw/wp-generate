@@ -4,8 +4,13 @@ class WpGenerate::Generator
 
     template_name = self.class.to_s.demodulize.downcase
     @templates.each_pair do |template_path,output|
-      input = "#{template_name}/#{template_path}.erb"
+      input = "#{template_name}/#{template_path}"
       full_path = File.join(File.dirname(__FILE__), 'templates', input)
+      erb = false
+      if not File.exist? full_path
+        full_path = "#{full_path}.erb"
+        erb = true
+      end
 
       raise IOError, "Will not overwrite existing files without global -f option" if File.exist? output and not @options[:force]
 
@@ -15,7 +20,11 @@ class WpGenerate::Generator
       puts "#{input} => #{output}"
       name = @vars[:name]
       open(output, 'w+') do |f|
-        f.write ERB.new(open(full_path).read).result(binding)
+        if erb
+          f.write ERB.new(open(full_path).read).result(binding)
+        else
+          f.write open(full_path).read
+        end
       end
     end
   end
