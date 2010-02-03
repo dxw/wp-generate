@@ -13,8 +13,9 @@ class WpGenerate::Generator
       FileUtils.makedirs dir unless File.directory? dir
 
       puts "#{input} => #{output}"
+      name = @vars[:name]
       open(output, 'w+') do |f|
-        f.write ERB.new(open(full_path).read).result
+        f.write ERB.new(open(full_path).read).result(binding)
       end
     end
   end

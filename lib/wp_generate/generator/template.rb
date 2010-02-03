@@ -5,6 +5,6 @@ class WpGenerate::Generator::Template < WpGenerate::Generator
     raise ArgumentError, "Provide template name plox" if name.nil? or name.empty?
 
     @templates = {"template.php" => "#{name}.php", "helper.php" => "helpers/#{name}_helper.php", "style.sass" => "style/#{name}.sass"}
-    @vars = {"name" => name}
+    @vars = {:name => name}
   end
 end
