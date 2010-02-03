@@ -1,4 +1,6 @@
 require 'active_support'
+require 'erb'
+
 class WpGenerate; end
 require 'wp_generate/generator'
 
