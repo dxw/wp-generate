@@ -4,6 +4,7 @@ class WpGenerate::Generator
 
     template_name = self.class.to_s.demodulize.downcase
     @templates.each_pair do |template_path,output|
+      output = "#{cwd}/#{output}"
       input = "#{template_name}/#{template_path}"
       full_path = File.join(File.dirname(__FILE__), 'templates', input)
       erb = false
@@ -40,5 +41,9 @@ class WpGenerate::Generator
       end
       @options = opt
     end
+  end
+
+  def cwd
+    ENV['WPGEN_WORK_DIR'] || Dir.pwd
   end
 end
