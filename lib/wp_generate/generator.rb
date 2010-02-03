@@ -5,6 +5,8 @@ class WpGenerate::Generator
       input = "#{template_name}/#{template_path}.erb"
       full_path = File.join(File.dirname(__FILE__), 'templates', input)
 
+      raise IOError, "Will not overwrite existing files" if File.exist? output
+
       dir = File.dirname(output)
       FileUtils.makedirs dir unless File.directory? dir
 
