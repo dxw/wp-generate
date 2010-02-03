@@ -8,11 +8,19 @@ String.send :include, ActiveSupport::CoreExtensions::String::Inflections
 
 class WpGenerate
   def self.generate args
-    generator = args.shift
+    options = []
+    while generator = args.shift
+      break unless generator.start_with? '-'
+      options << generator
+    end
+
+    if generator.nil?
+      raise ArgumentError, "Usage: wp-generate [GLOBAL OPT...] generator [PATH|OPT]"
+    end
 
     generator_path = 'wp_generate/generator/'+generator
     require generator_path
 
-    generator_path.camelize.constantize.new(args).generate
+    generator_path.camelize.constantize.new(args, options).generate
   end
 end
