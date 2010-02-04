@@ -13,4 +13,12 @@ describe WpGenerate do
 
     WpGenerate.generate args
   end
+
+  it "should raise an exception with no args" do
+    lambda { WpGenerate.generate([]) }.should raise_error ArgumentError
+  end
+
+  it "should raise an exception with no generator name" do
+    lambda { WpGenerate.generate(%w[-hello --there]) }.should raise_error ArgumentError
+  end
 end
