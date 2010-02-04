@@ -22,6 +22,7 @@ class WpGenerate
     begin
       require generator_path
     rescue LoadError
+      true # This is for rcov
     end
 
     generator_path.camelize.constantize.new(args, options).generate
