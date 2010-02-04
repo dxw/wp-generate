@@ -19,7 +19,10 @@ class WpGenerate
     end
 
     generator_path = 'wp_generate/generator/'+generator
-    require generator_path
+    begin
+      require generator_path
+    rescue LoadError
+    end
 
     generator_path.camelize.constantize.new(args, options).generate
   end
