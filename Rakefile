@@ -18,8 +18,17 @@ rescue LoadError
 end
 
 require 'spec/rake/spectask'
-desc "Run all examples"
+desc "Run all specs"
 Spec::Rake::SpecTask.new(:spec) do |t|
   t.spec_files = FileList['spec/**/*_spec.rb']
   t.ruby_opts = %w[-rubygems]
+end
+
+require 'spec/rake/spectask'
+desc "Coverage"
+Spec::Rake::SpecTask.new(:rcov) do |t|
+  t.spec_files = FileList['spec/**/*_spec.rb']
+  t.rcov = true
+  t.ruby_opts = %w[-rubygems]
+  t.rcov_opts = %w[--exclude ^/,spec]
 end
