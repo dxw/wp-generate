@@ -1,4 +1,8 @@
 class WpGenerate::Generator
+  def initialize *args
+    raise NotImplementedError, "This class doesn't do anything on its own, subclass it!"
+  end
+
   def generate
     opt_parse
 
