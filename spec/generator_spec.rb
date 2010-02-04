@@ -24,7 +24,7 @@ describe WpGenerate::Generator do
     g.instance_eval { @templates = {'abc' => 'def'}; @vars = {:name => 'the_name'}; @options = %w[-q] }
     full_path = %r[/templates/blankgen/abc$]
     output = %r[/def$]
-    text = "Here is some text"
+    text = "Here is some <%= test %> text"
 
     File.should_receive(:exist?).with(full_path).and_return(true)
     File.should_receive(:exist?).with(output).and_return(false)
