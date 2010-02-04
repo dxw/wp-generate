@@ -6,13 +6,16 @@ describe WpGenerate::Generator do
   end
 
   it "should correctly determine the cwd" do
-    class BlankGen < WpGenerate::Generator
-      def initialize
-      end
-    end
-
-    BlankGen.new.cwd.should == Dir.pwd
+    g = BlankGen.new
+    g.cwd.should == Dir.pwd
     ENV['WPGEN_WORK_DIR'] = '/tmp'
-    BlankGen.new.cwd.should == '/tmp'
+    g.cwd.should == '/tmp'
+  end
+
+  it "should parse options correctly" do
+    g = BlankGen.new
+    g.instance_eval { @options = %w[hello there -f -c -d] }
+    g.opt_parse
+    g.instance_eval { @options[:force].should == true }
   end
 end
