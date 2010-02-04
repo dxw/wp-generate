@@ -37,4 +37,16 @@ describe WpGenerate::Generator do
     Kernel.should_receive(:open).with(full_path).and_return(f2)
     g.generate
   end
+
+  it "should not overwrite files" do
+    g = BlankGen.new
+    g.instance_eval { @templates = {'abc' => 'def'}; @vars = {:name => 'the_name'}; @options = %w[-q] }
+    full_path = %r[/templates/blankgen/abc$]
+    output = %r[/def$]
+    text = "Here is some text"
+
+    File.should_receive(:exist?).with(full_path).and_return(true)
+    File.should_receive(:exist?).with(output).and_return(true)
+    lambda { g.generate }.should raise_error IOError
+  end
 end
