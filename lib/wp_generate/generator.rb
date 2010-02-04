@@ -22,7 +22,7 @@ class WpGenerate::Generator
       dir = File.dirname(output)
       FileUtils.makedirs dir unless File.directory? dir
 
-      puts "#{input} => #{output}"
+      STDERR.puts "#{input} => #{output}" unless @options[:quiet]
       name = @vars[:name]
       open(output, 'w+') do |f|
         if erb
@@ -41,6 +41,8 @@ class WpGenerate::Generator
         case o
         when '-f'
           opt[:force] = true
+        when '-q'
+          opt[:quiet] = true
         end
       end
       @options = opt

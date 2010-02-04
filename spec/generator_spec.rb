@@ -21,7 +21,7 @@ describe WpGenerate::Generator do
 
   it "should create appropriate files from templates" do
     g = BlankGen.new
-    g.instance_eval { @templates = {'abc' => 'def'}; @vars = {:name => 'the_name'}; @options = [] }
+    g.instance_eval { @templates = {'abc' => 'def'}; @vars = {:name => 'the_name'}; @options = %w[-q] }
     full_path = %r[/templates/blankgen/abc$]
     output = %r[/def$]
     text = "Here is some text"
