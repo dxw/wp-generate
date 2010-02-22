@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="<?php bloginfo('stylesheet_url') ?>" type="text/css">
   </head>
 <?php flush() ?>
-  <body class="<?php echo $body_class ?>">
+  <body <?php body_class() ?>>
     <div id="container">
       <div id="header">
         <h1><a href="/"><?php the_title() ?></a></h1>
