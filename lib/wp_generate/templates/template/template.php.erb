@@ -1,5 +1,5 @@
 <?php /* Template Name: <%= name.titleize %> */ ?>
 <?php include 'helpers/<%= name %>_helper.php' ?>
 <?php render_partial('header', array('body_class' => '<%= name %>')) ?>
-  <p>Content.</p>
+<?php the_content() ?>
 <?php render_partial('footer') ?>

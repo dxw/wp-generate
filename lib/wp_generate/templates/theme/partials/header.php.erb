@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= name %></title>
+    <title><?php the_title() ?></title>
     <link rel="stylesheet" href="<?php bloginfo('stylesheet_url') ?>" type="text/css">
   </head>
 <?php flush() ?>
   <body class="<?php echo $body_class ?>">
     <div id="container">
       <div id="header">
-        <h1><a href="/"><%= name %></a></h1>
+        <h1><a href="/"><?php the_title() ?></a></h1>
       </div>
