@@ -1,3 +1,4 @@
+require 'wp_config'
 require 'erb'
 require 'digest'
 require 'digest/sha1'
