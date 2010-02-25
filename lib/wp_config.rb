@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
 require 'singleton'
 
 class OpenStruct
@@ -27,6 +26,6 @@ class WPConfig
   attr_reader :config
 
   def initialize
-    @config = OpenStruct.new(YAML.load(open(File.join(Dir.pwd,'config.yml')).read))
+    @config = OpenStruct.new(YAML.load(open(File.join(Dir.pwd,'lib','config.yml')).read))
   end
 end
