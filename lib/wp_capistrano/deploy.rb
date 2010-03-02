@@ -72,8 +72,10 @@ Capistrano::Configuration.instance.load do
       # Git 1.5-compatability:
       run "cd #{latest_release} && DIR=`pwd` && for D in `grep '^\\[submodule' .git/config | cut -d\\\" -f2`; do cd $DIR/$D && git submodule init && git submodule update; done"
 
+      system("sass themes/#{application}/style/style.sass > themes/#{application}/style/sass_output.css")
+      top.upload("themes/#{application}/style/sass_output.css", "#{latest_release}/themes/#{application}/style/" , :via => :scp)
+
       run <<-CMD
-        sass #{latest_release}/themes/#{application}/style/style.sass > #{latest_release}/themes/#{application}/style/sass_output.css &&
         sed -i 's/\.php/\.css/' #{latest_release}/themes/#{application}/style.css &&
 
         mkdir -p #{latest_release}/finalized &&
