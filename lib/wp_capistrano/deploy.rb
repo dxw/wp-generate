@@ -10,6 +10,7 @@ Capistrano::Configuration.instance.load do
   set :application, WPConfig.application.name
   set :repository, WPConfig.application.repository
   set :domain, WPConfig.deploy.staging.ssh_domain
+  set :user, WPConfig.deploy.staging.ssh_user
   set :deploy_to, WPConfig.deploy.staging.path
   set :wordpress_domain, WPConfig.deploy.staging.vhost
   set :wordpress_db_name, WPConfig.deploy.staging.database.name
