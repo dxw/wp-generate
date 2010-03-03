@@ -88,6 +88,7 @@ Capistrano::Configuration.instance.load do
         ls #{latest_release} && cp -rv #{latest_release}/themes  #{latest_release}/finalized/wp-content/ ;
         ls #{latest_release} && cp -rv #{latest_release}/plugins #{latest_release}/finalized/wp-content/ ;
         ls #{latest_release} && cp -rv #{latest_release}/uploads #{latest_release}/finalized/wp-content/ ;
+        rm -f #{latest_release}/finalized/wp-content/uploads/dump.sql.gz ;
         true
       CMD
     end
