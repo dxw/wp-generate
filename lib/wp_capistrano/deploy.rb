@@ -88,7 +88,6 @@ Capistrano::Configuration.instance.load do
         ls #{latest_release} && cp -rv #{latest_release}/themes  #{latest_release}/finalized/wp-content/ ;
         ls #{latest_release} && cp -rv #{latest_release}/plugins #{latest_release}/finalized/wp-content/ ;
         ls #{latest_release} && cp -rv #{latest_release}/uploads #{latest_release}/finalized/wp-content/ ;
-        rm -f #{latest_release}/finalized/wp-content/uploads/dump.sql.gz ;
         true
       CMD
     end
@@ -120,7 +119,7 @@ Capistrano::Configuration.instance.load do
 
     desc "Creates the DB, and loads the dump"
     task :mysql do
-      upload("uploads/dump.sql.gz", shared_path, :via => :scp)
+      upload("data/dump.sql.gz", shared_path, :via => :scp)
       run <<-CMD
         test #{wordpress_db_name}X != `echo 'show databases' | mysql -u root | grep '^#{wordpress_db_name}$'`X &&
         echo 'create database if not exists `#{wordpress_db_name}`' | mysql -u root &&
