@@ -41,11 +41,9 @@ define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', '');
 
 /** Set Path of your WordPress install if specified in your capfile **/
-<% if fetch(:wordpress_home, false) %>
-define('WP_HOME', '<%= wordpress_home %>' );
-<% end %>
-<% if fetch(:wordpress_siteurl, false) %>
-define('WP_SITEURL', '<%= wordpress_siteurl %>');
+<% if fetch(:wordpress_domain, false) %>
+define('WP_HOME', '<%= wordpress_domain %>' );
+define('WP_SITEURL', '<%= wordpress_domain %>');
 <% end %>
 
 /**#@+
