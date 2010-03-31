@@ -85,9 +85,12 @@ Capistrano::Configuration.instance.load do
         cp -rv   #{shared_path}/htaccess        #{latest_release}/finalized/.htaccess &&
         rm -rf   #{latest_release}/finalized/wp-content &&
         mkdir    #{latest_release}/finalized/wp-content &&
-        ls #{latest_release} && cp -rv #{latest_release}/themes  #{latest_release}/finalized/wp-content/ ;
-        ls #{latest_release} && cp -rv #{latest_release}/plugins #{latest_release}/finalized/wp-content/ ;
-        ls #{latest_release} && cp -rv #{latest_release}/uploads #{latest_release}/finalized/wp-content/ ;
+        cp -rv #{latest_release}/themes  #{latest_release}/finalized/wp-content/ ;
+        cp -rv #{latest_release}/plugins #{latest_release}/finalized/wp-content/ ;
+        cp -rv #{latest_release}/uploads #{latest_release}/finalized/wp-content/ ;
+        mkdir -p #{latest_release}/finalized/wp-content/cache/ ;
+        chmod -R 777 #{latest_release}/finalized/wp-content/cache/ ;
+        chmod -R 777 #{latest_release}/finalized/wp-content/uploads/ ;
         true
       CMD
     end
