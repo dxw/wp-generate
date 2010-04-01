@@ -42,8 +42,8 @@ define('DB_COLLATE', '');
 
 /** Set Path of your WordPress install if specified in your capfile **/
 <% if fetch(:wordpress_domain, false) %>
-define('WP_HOME', '<%= wordpress_domain %>' );
-define('WP_SITEURL', '<%= wordpress_domain %>');
+define('WP_HOME', 'http://<%= wordpress_domain %>' );
+define('WP_SITEURL', 'http://<%= wordpress_domain %>');
 <% end %>
 
 /**#@+
