@@ -85,12 +85,11 @@ Capistrano::Configuration.instance.load do
         cp -rv   #{shared_path}/htaccess        #{latest_release}/finalized/.htaccess &&
         rm -rf   #{latest_release}/finalized/wp-content &&
         mkdir    #{latest_release}/finalized/wp-content &&
-        cp -rv #{latest_release}/themes  #{latest_release}/finalized/wp-content/ ;
-        cp -rv #{latest_release}/plugins #{latest_release}/finalized/wp-content/ ;
-        cp -rv #{latest_release}/uploads #{latest_release}/finalized/wp-content/ ;
+        cp -rv #{latest_release}/themes  #{latest_release}/finalized/wp-content/ &&
+        cp -rv #{latest_release}/plugins #{latest_release}/finalized/wp-content/ &&
+        ln -s #{shared_path}/uploads   #{latest_release}/finalized/wp-content/ &&
         mkdir -p #{latest_release}/finalized/wp-content/cache/ ;
         chmod -R 777 #{latest_release}/finalized/wp-content/cache/ ;
-        chmod -R 777 #{latest_release}/finalized/wp-content/uploads/ ;
         true
       CMD
     end
@@ -117,6 +116,7 @@ Capistrano::Configuration.instance.load do
       wp.config
       wp.htaccess
       wp.checkout
+      setup.uploads
       setup.mysql
     end
 
@@ -128,6 +128,12 @@ Capistrano::Configuration.instance.load do
         echo 'create database if not exists `#{wordpress_db_name}`' | mysql -u root &&
         zcat #{shared_path}/dump.sql.gz | sed 's/localhost/#{wordpress_domain}/g' | mysql -u root #{wordpress_db_name} || true
       CMD
+    end
+
+    desc "Creates uploads dir"
+    task :uploads do
+      upload("uploads", shared_path, :recursive => true, :via => :scp)
+      run "chmod -R 777 #{shared_path}/uploads"
     end
 
   end
