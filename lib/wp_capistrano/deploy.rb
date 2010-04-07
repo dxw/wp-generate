@@ -5,19 +5,45 @@ require 'digest/sha1'
 Capistrano::Configuration.instance.load do
   default_run_options[:pty] = true
 
+  def set_target target
+    tt = WPConfig.instance.h['deploy'][target]
+    if tt
+      t = OpenStruct.new(tt)
+      set :domain, t.ssh_domain
+      set :user, t.ssh_user
+      set :deploy_to, t.path
+      set :wordpress_domain, t.vhost
+      set :wordpress_db_name, t.database.name
+      set :wordpress_db_user, t.database.user
+      set :wordpress_db_password, t.database.password
+      set :wordpress_db_host, t.database.host
+      set :use_sudo, t.use_sudo
+
+      @roles = {}
+      role :app, domain
+      role :web, domain
+      role :db,  domain, :primary => true
+    end
+  end
+
+  WPConfig.instance.h['deploy'].each_pair do |k,v|
+    set_target k if v['default']
+  end
+
+  task :testing do
+    set_target 'testing'
+  end
+  task :staging do
+    set_target 'staging'
+  end
+  task :production do
+    set_target 'production'
+  end
+
   # Load from config
   set :wordpress_version, WPConfig.wordpress.version
   set :application, WPConfig.application.name
   set :repository, WPConfig.application.repository
-  set :domain, WPConfig.deploy.staging.ssh_domain
-  set :user, WPConfig.deploy.staging.ssh_user
-  set :deploy_to, WPConfig.deploy.staging.path
-  set :wordpress_domain, WPConfig.deploy.staging.vhost
-  set :wordpress_db_name, WPConfig.deploy.staging.database.name
-  set :wordpress_db_user, WPConfig.deploy.staging.database.user
-  set :wordpress_db_password, WPConfig.deploy.staging.database.password
-  set :wordpress_db_host, WPConfig.deploy.staging.database.host
-  set :use_sudo, WPConfig.deploy.staging.use_sudo
 
   # Everything else
   set :scm, "git"
@@ -55,11 +81,8 @@ Capistrano::Configuration.instance.load do
   #no need for log and pids directory
   set :shared_children, %w(system)
 
-  role :app, domain
-  role :web, domain
-  role :db,  domain, :primary => true
-
   namespace :deploy do
+
     desc "Override deploy restart to not do anything"
     task :restart do
       #

@@ -23,9 +23,10 @@ class WPConfig
     self.instance.config.send(method, *args)
   end
 
-  attr_reader :config
+  attr_reader :config, :h
 
   def initialize
-    @config = OpenStruct.new(YAML.load(open(File.join(Dir.pwd,'lib','config.yml')).read))
+    @h = YAML.load(open(File.join(Dir.pwd,'lib','config.yml')).read)
+    @config = OpenStruct.new(@h)
   end
 end
