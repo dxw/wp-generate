@@ -155,7 +155,11 @@ Capistrano::Configuration.instance.load do
 
     desc "Creates uploads dir"
     task :uploads do
-      upload("uploads", shared_path, :recursive => true, :via => :scp)
+      if File.exist? 'uploads'
+        upload("uploads", shared_path, :recursive => true, :via => :scp)
+      else
+        run "mkdir -p #{shared_path}/uploads"
+      end
       run "chmod -R 777 #{shared_path}/uploads"
     end
 
