@@ -10,7 +10,7 @@ class WpGenerate::Generator::Theme < WpGenerate::Generator
       helpers/helper.php
       partials/header.php
       partials/footer.php
-      style/sass_output.php
+      sass/sass_output.php
     ]
     @templates = {}
     templates.each do |t|
