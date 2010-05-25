@@ -15,12 +15,20 @@ class WpGenerate
       options << generator
     end
 
+    base_path = 'wp_generate/generator'
+
     if generator.nil?
-      puts "Usage: wp-generate [GLOBAL OPT...] generator [PATH|OPT]"
+      STDERR.puts 'Usage: wp-generate [GLOBAL OPT...] [generator] [PATH|OPT]'
+      STDERR.puts 'Generators:'
+      $:.map{|path|File.join(path,base_path,'*.rb')}.each do |path|
+        Dir.glob(path).map{|generator| generator.match(%r&/([^/]+)\.rb$&)[1]}.each do |generator|
+          STDERR.puts '  '+generator
+        end
+      end
       exit 1
     end
 
-    generator_path = 'wp_generate/generator/'+generator
+    generator_path = File.join(base_path,generator)
     begin
       require generator_path
     rescue LoadError
