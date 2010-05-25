@@ -2,7 +2,11 @@ class WpGenerate::Generator::Theme < WpGenerate::Generator
   def initialize args, options
     @options = options
     name = args.shift
-    raise ArgumentError, "Provide theme name plox" if name.nil? or name.empty?
+    if name.nil? or name.empty?
+      STDERR.puts 'Usage: wp-generate theme [path]'
+      STDERR.puts 'Example: cd wp-content/themes && wp-generate theme mytheme'
+      exit 1
+    end
 
     templates = %w[
       index.php
