@@ -1,0 +1,22 @@
+= wp-generate
+
+script/generate for WordPress
+
+== Installation
+
+  gem install wp-generate
+
+== Usage
+
+To create a new theme:
+
+  wp-generate theme wp-content/themes/mytheme
+
+This will create a theme just the way we like it.
+
+Then get started with the home page:
+
+  cd wp-content/themes/mytheme
+  wp-generate template home
+
+This will create the appropriate page template, helper, and stylesheet.
