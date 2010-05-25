@@ -16,7 +16,8 @@ class WpGenerate
     end
 
     if generator.nil?
-      raise ArgumentError, "Usage: wp-generate [GLOBAL OPT...] generator [PATH|OPT]"
+      puts "Usage: wp-generate [GLOBAL OPT...] generator [PATH|OPT]"
+      exit 1
     end
 
     generator_path = 'wp_generate/generator/'+generator
