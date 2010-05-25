@@ -7,6 +7,12 @@ require 'wp_generate/generator'
 
 String.send :include, ActiveSupport::CoreExtensions::String::Inflections
 
+# A hack. I don't really know how to go about this best.
+begin
+  require 'wp_capistrano'
+rescue LoadError
+end
+
 class WpGenerate
   def self.generate args
     options = []
