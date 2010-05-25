@@ -3,6 +3,10 @@ class WpGenerate::Generator
     raise NotImplementedError, "This class doesn't do anything on its own, subclass it!"
   end
 
+  def templates_dir
+    File.join(File.dirname(__FILE__), 'templates')
+  end
+
   def generate
     opt_parse
 
@@ -10,7 +14,7 @@ class WpGenerate::Generator
     @templates.each_pair do |template_path,output|
       output = "#{cwd}/#{output}"
       input = "#{template_name}/#{template_path}"
-      full_path = File.join(File.dirname(__FILE__), 'templates', input)
+      full_path = File.join(templates_dir, input)
       erb = false
       if not File.exist? full_path
         full_path = "#{full_path}.erb"
